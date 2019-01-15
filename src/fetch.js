@@ -17,13 +17,14 @@ export default async function fetchSheet(id) {
   const rows = data.feed.entry.slice(1).reduce((acc, entry, index) => {
     const content = entry.content.$t;
     if (index % columns === 0) {
-      return acc.concat([content]);
+      return acc.concat([[content]]);
     }
 
     return [
       ...acc.slice(0, acc.length - 1),
-      [...[acc[acc.length - 1]], content]
+      acc[acc.length - 1].concat(content)
     ];
   }, []);
+  console.log({ rows, columns });
   return rows;
 }
